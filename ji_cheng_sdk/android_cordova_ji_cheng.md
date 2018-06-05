@@ -112,7 +112,7 @@ public class App extends Application {
 public void onCreate() {
     super.onCreate();
     GrowingIO.startWithConfiguration(this, new Configuration()
-//                .setDisableImpression(true)
+            // .setDisableImpression(true)
             .useID()
             .trackAllFragments()
             .setTestMode(true)
