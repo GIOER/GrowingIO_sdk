@@ -10,13 +10,13 @@
 
 ## 虚拟域名表
 
-| 域名 | 作用 | 端口 | 协议 |
-| :--- | :--- | :--- | :--- |
-| gio.growingio.com | 前端域名，打开网站的主域名 | 443 | https |
-| account.growingio.com | 登陆域名，主要用户账号登陆 | 443 | https |
-| gta.growingio.com | 网关域名，用于连接后端服务资源的域名 | 443 | https |
-| short.growingio.com | 短链域名，短链接服务，将长链接域名转换为短链接 | 443 | https |
-| vds.growingio.com | vds域名，后端数据采集的上传途径 | 443 | https |
+| 域名                  | 作用                                           | 端口 | 协议  |
+| :---                  | :---                                           | :--- | :---  |
+| gio.growingio.com     | 前端域名，打开网站的主域名                     | 443  | https |
+| account.growingio.com | 登陆域名，主要用户账号登陆                     | 443  | https |
+| gta.growingio.com     | 网关域名，用于连接后端服务资源的域名           | 443  | https |
+| short.growingio.com   | 短链域名，短链接服务，将长链接域名转换为短链接 | 443  | https |
+| vds.growingio.com     | vds域名，后端数据采集的上传途径                | 443  | https |
 
 ## 更新记录
 
@@ -52,12 +52,11 @@
 
 将以下代码放入需要网站页面统一的&lt;head&gt;&lt;/head&gt;标签中，安装成功后，除 localhost 和 IP 地址外，所有网址下的行为数据都将会被收集。
 
-```
+```js
 <script type='text/javascript'>
 !function(e,t,n,g,i){e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},n=t.createElement("script"),tag=t.getElementsByTagName("script")[0],n.async=1,n.src=('https:'==document.location.protocol?'https://':'http://')+g,tag.parentNode.insertBefore(n,tag)}(window,document,"script","assets.growingio.com/op/2.0/gio.js","gio");
   gio('init', '96a848cc38c178cd',  ##需要将此处项目ID修改为您的对应项目的ID，项目ID可以在添加应用的页面可以获得
   {'setImp':false,
-//更新前为'setImp':'false', 更新不会对数据采集造成影响
    'setTrackerHost':'vds.growingio.com:443', // vds域名
    'setTrackerScheme':'https',
    'setOrigin': 'https://gio.growingio.com' // 前端主域名
@@ -107,7 +106,7 @@
 
 ### **在AppDelegate.m添加集成代码** {#appdelegate-m}
 
-```
+```c
 #import "Growing.h"
 ...
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -130,7 +129,7 @@
 
 因为您代码的复杂程度以及iOS SDK的版本差异，有时候 \[Growing handleUrl:url\] 并没有被调用。请在各个平台上调试这段代码，确保当App被URL scheme唤醒之后，该函数能被调用到。
 
-```
+```c
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if ([Growing handleUrl:url]) // 请务必确保该函数被调用
     {
@@ -146,7 +145,7 @@
 
 很多应用上方都有横向滚动的Banner广告。对于这样的广告，如果要收集数据，请在响应点击的控件上添加如下代码
 
-```
+```c
 UIView *view;
 …
 view.growingAttributesValue = 广告的唯一ID;
@@ -159,7 +158,7 @@ view.growingAttributesValue = 广告的唯一ID;
 
 例如，当您的横向滚动广告共有3张广告图时，您可以在3个响应点击的View上分别设置不同的广告唯一ID，类似如下效果：
 
-```
+```c
 view1.growingAttributesValue = @“ad1”;
 view2.growingAttributesValue = @“ad2”;
 view3.growingAttributesValue = @“ad3”;
@@ -173,7 +172,7 @@ view3.growingAttributesValue = @“ad3”;
 
 在 project 级别的 build.gradle 文件中添加 vds-gradle-plugin 依赖：
 
-```
+```java
     buildscript {
             repositories {
                 jcenter()
@@ -181,7 +180,6 @@ view3.growingAttributesValue = @“ad3”;
             dependencies {
                 classpath 'com.android.tools.build:gradle:3.0.1'
                 classpath 'com.growingio.android:vds-gradle-plugin:OP-2.3.1'
-//2018-05-02升级，升级前版本为2.0.7
                 // NOTE: Do not place your application dependencies here; they belong
                 // in the individual module build.gradle files
             }
@@ -192,7 +190,7 @@ view3.growingAttributesValue = @“ad3”;
 
 在 module 级别的 build.gradle 文件中添加 com.growingio.android 插件、vds-android-agent 依赖和对应的资源：
 
-```
+```java
 apply plugin: 'com.android.application'
 apply plugin: 'com.growingio.android'
 
@@ -224,10 +222,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
     compile 'com.growingio.android:vds-android-agent:OP-2.3.1@aar'
-
-    //更新前：compile 'com.growingio.android:vds-android-agent:OP-2.0.7@aar'
 }
 ```
 
@@ -237,7 +233,7 @@ testCompile 'junit:junit:4.12'
 
 把URL Scheme添加到您的项目，以便我们唤醒您的程序，进行圈选。将该产品的URLScheme添加到你的AndroidManifest.xml中的LAUNCHER Activity下。例如
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.wenke.gioeesdkandroiddemo">
 
@@ -277,7 +273,7 @@ testCompile 'junit:junit:4.12'
 
 在app.java中添加以下代码：
 
-```
+```java
 package com.example.wenke.gioeesdkandroiddemo;
 import android.app.Application;
 import com.growingio.android.sdk.collection.Configuration;
@@ -292,7 +288,7 @@ public class App extends Application {
 public void onCreate() {
     super.onCreate();
     GrowingIO.startWithConfiguration(this, new Configuration()
-//                .setDisableImpression(true)
+            // .setDisableImpression(true)
             .useID()
             .trackAllFragments()
             .setTestMode(true)
@@ -310,9 +306,9 @@ public void onCreate() {
 
 ### **修改MainActivity.java文件** {#mainactivity-java}
 
-在MainActivity.java中添加以下代码：
+以下代码是在MainActivity中测试SDK集成状态是否正常的示例代码，在MainActivity.java中添加以下代码：
 
-```
+```java
 package com.example.wenke.gioeesdkandroiddemo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -340,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
 
 如果你启用了混淆，请在你的proguard-rules.pro中加入如下代码：
 
-```
+```java
 -keep class com.growingio.android.sdk.** {
     *;
 }
@@ -380,6 +376,8 @@ GrowingIO.getInstance\(\).trackBanner\(banner, bannerDescriptions\)
 
 例如，当您有 5 张广告图时，只需创建一个 String 类型的 List，然后按 5 个广告出现的顺序给 List 的元素设置对应的广告描述，同样设置 5 个元素即可。
 
+# Cordova SDK 集成
+
 ## IOS cordova 集成 {#ios-cordova}
 
 ios cordova集成参照ios的集成方式
@@ -388,7 +386,7 @@ ios cordova集成参照ios的集成方式
 
 ### **添加cordova插件** {#cordova}
 
-```
+```sh
 cordova plugin add cordova-growingio-plugin
 ```
 
@@ -398,14 +396,14 @@ cordova plugin add cordova-growingio-plugin
 
 ANDROID/BUILD.GRADLE文件添加
 
-```
+```java
 buildscript {
   repositories {
     jcenter()
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:1.5.0'
-    classpath 'com.growingio.android:vds-gradle-plugin:2.1.0' //sdk版本
+    classpath 'com.growingio.android:vds-gradle-plugin:OP-2.3.1' //sdk版本
   }
 }
 allprojects {
@@ -421,7 +419,7 @@ allprojects {
 
 找到ANDROID/APP/BUILD.GRADLE文件加入以下代码
 
-```
+```java
 apply plugin: 'com.android.application'
 apply plugin: 'com.growingio.android'
 android {
@@ -431,7 +429,7 @@ android {
    }//更改为对应的项目ID和URL scheme
 }
 dependencies {
-    compile 'com.growingio.android:vds-android-agent:2.1.0@aar'
+    compile 'com.growingio.android:vds-android-agent:OP-2.3.1@aar'
 }
 ```
 
@@ -439,7 +437,7 @@ dependencies {
 
 在AndroidManifest.xml文件添加以下代码：
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.wenke.gioeesdkandroiddemo">
 
@@ -478,7 +476,7 @@ dependencies {
 
 在app.java添加以下代码
 
-```
+```java
 ackage com.example.wenke.gioeesdkandroiddemo;
 import android.app.Application;
 import com.growingio.android.sdk.collection.Configuration;
@@ -504,7 +502,6 @@ public void onCreate() {
             .setGtaHost("https://gta.growingio.com") // gta域名
             .setHybridJSSDKUrlPrefix("https://assets.growingio.com/sdk/hybrid")
     );
-    LogUtil.i("GIO", "APP ");
 }
 }
 ```
@@ -513,7 +510,7 @@ public void onCreate() {
 
 当应用程序打开时，需要初始化会话并启动采集功能。所以，在deviceready或者resume事件触发时，可以通过下列方式初始化会话。
 
-```
+```js
 // sample index.js
   var app = {
     initialize: function() {
@@ -545,7 +542,7 @@ public void onCreate() {
                     trackerHost:'https://vds.growingio.com', //vds域名
                     dataHost:'https://gio.growingio.com', // 前端主域名
                     gtaHost:'https://gta.growingio.com',  //gta域名
-       hybridJSSDKUrlPrefix:'https://assets.growingio.com/sdk/hybrid'
+                    hybridJSSDKUrlPrefix:'https://assets.growingio.com/sdk/hybrid'
                 },
                  onSucc,
                  onFail);
@@ -564,7 +561,7 @@ react-native-growingio 用于RN开发者手动发送数据。
 
 ### **引入** {#-0}
 
-```
+```sh
 npm install --save https://github.com/growingio/react-native-growingio.git
 npm install
 react-native link react-native-growingio
@@ -584,7 +581,7 @@ c.在工程Build Phases ➜ Link Binary With Libraries中添加libGrowingIORNPlu
 
 添加初始化函数: 在 AppDelegate 中引入\#import "Growing.h"并添加启动方法
 
-```
+```c
 - (BOOL)application:(UIApplication *)application
   didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
       ...
@@ -603,11 +600,15 @@ c.在工程Build Phases ➜ Link Binary With Libraries中添加libGrowingIORNPlu
 
 在Application中的onCreate方法中初始化：
 
-```
+```java
   GrowingIO.startWithConfiguration(this, new Configuration()
     .useID()
     .trackAllFragments()
-    .setChannel("**应用商店"));
+    .setChannel("**应用商店")
+    .setTrackerHost("https://vds.growingio.com")  // vds域名
+    .setDataHost("https://gio.growingio.com") // 前端主域名
+    .setGtaHost("https://gta.growingio.com") // gta域名
+    .setHybridJSSDKUrlPrefix("https://assets.growingio.com/sdk/hybrid"));
 ```
 
 AndroidManifest.xml以及module级别build.gradle中android defaultConfig 中添加的属性，请见官网配置。  [添加官网配置](https://docs.growingio.com/sdk-20/sdk-20-api-wen-dang/android-sdk-21-an-zhuang.html)
@@ -629,7 +630,7 @@ AndroidManifest.xml以及module级别build.gradle中android defaultConfig 中添
 
 在定义Component之前引入
 
-```
+```js
 import {
     NativeModules
 } from 'react-native';
@@ -637,7 +638,7 @@ import {
 
 之后就可以使用GrowingIO的方法,例如在js中调用自定义事件方法：
 
-```
+```js
  NativeModules.GrowingIO.track("registerSuccess", {"gender":"male"});
 ```
 
@@ -647,13 +648,13 @@ import {
 
 在工程目录下
 
-```
+```sh
 mkdir Android/app/assets
 ```
 
 在app build.gradle android中添加：
 
-```
+```java
 sourceSets {
      main {
          assets.srcDirs = ['assets']
@@ -663,7 +664,7 @@ sourceSets {
 
 在工程目录下：
 
-```
+```sh
 react-native bundle --platform android --dev false --entry-file App.js --bundle-output android/app/assets/index.android.bundle  --assets-dest android/app/src/main/res/
 ```
 
@@ -731,7 +732,7 @@ SDK安装成功后，数据会在一小时后更新，在概览页面即可进�
 
 ### **Web端** {#web}
 
-```
+```js
 //setUserId API原型
 gio('setUserId', userId);
 
@@ -744,7 +745,7 @@ gio('clearUserId');
 
 ### **Android端** {#android}
 
-```
+```java
 // setUserId API原型
 GrowingIO.getInstance().setUserId(String userId);
 
@@ -760,7 +761,7 @@ GrowingIO.getInstance().clearUserId();
 
 ### **IOS 端** {#ios}
 
-```
+```c
 // setUserId API原型
 + (void)setUserId:(NSString *)userId;
 
