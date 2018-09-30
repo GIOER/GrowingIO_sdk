@@ -86,7 +86,7 @@
 
 ### **准备最新IOS SDK** {#ios-sdk}
 
-点击下载[_iOS SDK_](http://assets.growingio.com/sdk/GrowingIO-iOS-SDK-2.3.1.zip)
+点击下载[_iOS SDK_](http://assets.growingio.com/sdk/GrowingIO-iOS-SDK-2.3.3.zip)
 
 ### **导入SDK包** {#sdk}
 
@@ -179,7 +179,7 @@ view3.growingAttributesValue = @“ad3”;
             }
             dependencies {
                 classpath 'com.android.tools.build:gradle:3.0.1'
-                classpath 'com.growingio.android:vds-gradle-plugin:OP-2.3.1'
+                classpath 'com.growingio.android:vds-gradle-plugin:OP-2.3.3'
                 // NOTE: Do not place your application dependencies here; they belong
                 // in the individual module build.gradle files
             }
@@ -223,7 +223,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.growingio.android:vds-android-agent:OP-2.3.1@aar'
+    compile 'com.growingio.android:vds-android-agent:OP-2.3.3@aar'
 }
 ```
 
@@ -403,7 +403,7 @@ buildscript {
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:1.5.0'
-    classpath 'com.growingio.android:vds-gradle-plugin:OP-2.3.1' //sdk版本
+    classpath 'com.growingio.android:vds-gradle-plugin:OP-2.3.3' //sdk版本
   }
 }
 allprojects {
@@ -429,7 +429,7 @@ android {
    }//更改为对应的项目ID和URL scheme
 }
 dependencies {
-    compile 'com.growingio.android:vds-android-agent:OP-2.3.1@aar'
+    compile 'com.growingio.android:vds-android-agent:OP-2.3.3@aar'
 }
 ```
 
